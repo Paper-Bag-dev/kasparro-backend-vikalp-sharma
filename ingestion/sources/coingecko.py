@@ -1,5 +1,6 @@
+# ingestion/sources/coingecko.py
 import os
-import requests
+import httpx
 from typing import List, Dict
 
 COINGECKO_BASE_URL = "https://api.coingecko.com/api/v3"
@@ -16,13 +17,14 @@ def fetch_coingecko_items() -> List[Dict]:
         "order": "market_cap_desc",
         "per_page": 100,
         "page": 1,
-        "sparkline": "false"
+        "sparkline": "false",
     }
 
     headers = {
         "x-cg-pro-api-key": api_key
     }
 
-    response = requests.get(url, headers=headers, params=params, timeout=10)
-    response.raise_for_status()
-    return response.json()
+    with httpx.Client(timeout=10.0) as client:
+        response = client.get(url, headers=headers, params=params)
+        response.raise_for_status()
+        return response.json()
