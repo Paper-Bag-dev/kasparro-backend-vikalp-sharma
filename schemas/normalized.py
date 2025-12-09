@@ -4,7 +4,7 @@ from datetime import datetime
 
 class NormalizedCoinModel(BaseModel):
     source_name: str
-    source_record_name: str
+    source_record_id: str
     symbol: Optional[str]
     name: Optional[str]
     price: Optional[float]
