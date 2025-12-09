@@ -1,10 +1,17 @@
 import httpx
 from typing import List, Dict
+import os
 
 def fetch_coinpaprika_items() -> List[Dict]:
     url = "https://api.coinpaprika.com/v1/tickers"
+    api_key = os.getenv("COINPAPRIKA_API_KEY")
+
     try:    
-        with httpx.Client(timeout=10.0) as client:
+        headers = {}
+        if api_key:
+            headers = {"Authorization": f"Bearer {api_key}"}
+        
+        with httpx.Client(timeout=10.0, headers=headers) as client:
             response = client.get(url)
             response.raise_for_status()
             return response.json()
