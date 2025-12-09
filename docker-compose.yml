@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   postgres:
     image: postgres:15
@@ -13,6 +11,27 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d kasparro"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: .
+    container_name: kasparro_api
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg2://postgres:postgres@postgres:5432/kasparro
+      COINGECKO_API_KEY: ${COINGECKO_API_KEY}
+      APP_ENV: production
+    ports:
+      - "8000:8000"
+    command: >
+      uvicorn main:app --host 0.0.0.0 --port 8000
 
 volumes:
   postgres_data:

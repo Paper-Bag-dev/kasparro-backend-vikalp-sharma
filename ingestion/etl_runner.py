@@ -6,6 +6,8 @@ from ingestion.sources.coinpaprika import fetch_coinpaprika_items
 from ingestion.sources.csv_source import fetch_csv_rows
 from ingestion.transforms import normalize_coinpaprika, normalize_csv_item
 from services.etl_state import update_last_run
+from ingestion.sources.coingecko import fetch_coingecko_items
+from ingestion.transforms import normalize_coingecko
 import os
 
 CSV_PATH = os.getenv("CSV_PATH")

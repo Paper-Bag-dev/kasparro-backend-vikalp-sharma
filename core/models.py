@@ -18,6 +18,15 @@ class RawCsvCoin(Base):
     payload = Column(JSONB, nullable=False)
     ingested_at = Column(DateTime(timezone=True), server_default=func.now())
 
+class RawCoinGecko(Base):
+    __tablename__ = "raw_coingecko"
+
+    id = Column(Integer, primary_key=True, index=True)
+    source_record_id = Column(String, index=True)
+    payload = Column(JSONB)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+
 class NormalizedCoins(Base):
     __tablename__ = "normalized_coins"
     id = Column(Integer, primary_key=True)
