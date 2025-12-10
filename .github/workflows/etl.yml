@@ -1,8 +1,8 @@
-name: Run ETL
+name: ETL CRON
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "0 */1 * * *"  # Every hour instead of every 5 minutes
   workflow_dispatch:
 
 jobs:
@@ -11,6 +11,16 @@ jobs:
     steps:
       - name: Trigger ETL on Render
         run: |
-          curl -X POST \
+          response=$(curl -s -w "\n%{http_code}" -X POST \
             -H "x-api-key: ${{ secrets.CRON_API_KEY }}" \
-            https://kasparro-backend-latest.onrender.com/internal/run-etl
+            https://kasparro-backend-latest.onrender.com/internal/run-etl)
+          
+          echo "Response: $response"
+          http_code=$(echo "$response" | tail -n1)
+          
+          if [ "$http_code" -ne 200 ] && [ "$http_code" -ne 202 ]; then
+            echo "Failed with HTTP $http_code"
+            exit 1
+          fi
+          
+          echo "ETL triggered successfully"
