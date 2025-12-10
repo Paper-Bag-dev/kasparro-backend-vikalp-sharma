@@ -10,7 +10,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 APP_ENV = os.getenv("APP_ENV", "local")
 
 if APP_ENV == "test":
-    DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/kasparro"
+    DATABASE_URL = "sqlite:///:memory:"
 else:
     DATABASE_URL = os.getenv(
         "DATABASE_URL",
