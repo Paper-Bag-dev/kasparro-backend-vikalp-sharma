@@ -3,11 +3,11 @@
 This project implements a complete ETL + API backend for the Kasparro assignment.
 
 ## ✅ Completed Requirements
-**P0 — Core ETL + API + Docker**  
-**P1 — Fully runnable system (Dockerized, scheduler, internal trigger, migrations)**  
-**P2.3 — Observability (structured JSON logging, metrics)**  
-**P2.4 — GitHub Actions CI (tests + Postgres service)**  
-**P2.5 — DevOps Enhancements (Docker Hub image publishing, clean Dockerfile)**  
+**P0 — FOUNDATION LAYER**  
+**P1 — GROWTH LAYER**  
+**P2.3 — Rate Limiting + Backoff**  
+**P2.4 — Observability Layer**  
+**P2.5 — DevOps Enhancements**  
 
 ## 🔧 Tech Stack
 - FastAPI — API layer  
