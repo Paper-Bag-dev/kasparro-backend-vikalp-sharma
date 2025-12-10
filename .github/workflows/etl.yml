@@ -1,0 +1,16 @@
+name: Run ETL
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  call-etl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger ETL on Render
+        run: |
+          curl -X POST \
+            -H "x-api-key: ${{ secrets.CRON_API_KEY }}" \
+            https://kasparro-backend-latest.onrender.com/internal/run-etl
