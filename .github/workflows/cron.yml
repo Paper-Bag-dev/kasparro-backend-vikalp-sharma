@@ -2,7 +2,7 @@ name: ETL CRON
 
 on:
   schedule:
-    - cron: "0 */1 * * *"  # Every hour instead of every 5 minutes
+    - cron: "0 */1 * * *"
   workflow_dispatch:
 
 jobs:
