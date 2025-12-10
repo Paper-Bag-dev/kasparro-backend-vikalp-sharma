@@ -13,3 +13,4 @@ def run_etl_internal(x_api_key: str = Header(None)):
 
     threading.Thread(target=ETLService.run).start()
     return {"status": "ok", "message": "ETL triggered"}
+
