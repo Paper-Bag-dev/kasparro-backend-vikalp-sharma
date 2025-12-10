@@ -36,6 +36,12 @@ docker pull aetherlover/kasparro-backend:latest
 
 # 🚀 Run Locally
 
+## 0. Clone this repository:
+```
+git clone https://github.com/Paper-Bag-dev/kasparro-backend-vikalp-sharma.git
+cd kasparro-backend-vikalp-sharma
+```
+
 ## 1. Create `.env`
 
 (Replace values)
