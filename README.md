@@ -40,7 +40,6 @@ docker pull aetherlover/kasparro-backend:latest
 
 (Replace values)
 
-#### ADD YOUR BLOCK HERE
 
 Important variables:
 
