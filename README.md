@@ -1,6 +1,6 @@
 # Kasparro Crypto ETL System — Submission Overview
 
-This project implements a complete ETL + API backend for the Kasparro assignment. This project is deplyed on render due to credit limitations in other cloud services providers. Its running for 0 cost via a workflow cron job in .github/workflows/cron.yml and backend hosted and deployed on render.com with postgres instance from aiven cloud. You can visit https://kasparro-backend-latest.onrender.com/ to check the get endpoints labelled below. To run it please follow the instructions below after cloning this repo and use the Makefile to run it locally.
+This project implements a complete ETL + API backend for the Kasparro assignment. This project is deployed on render due to credit limitations in other cloud services providers. Its running for 0 cost via a workflow cron job in .github/workflows/cron.yml and backend hosted and deployed on render.com with postgres instance from aiven cloud. You can visit https://kasparro-backend-latest.onrender.com/ to check the get endpoints labelled below. To run it please follow the instructions below after cloning this repo and use the Makefile to run it locally.
 
 ## ✅ Completed Requirements
 **P0 — FOUNDATION LAYER**  
