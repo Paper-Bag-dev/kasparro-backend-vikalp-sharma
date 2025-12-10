@@ -17,7 +17,6 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          APP_ENV: github
         ports: ["5432:5432"]
         options: >-
           --health-cmd="pg_isready -U postgres"
@@ -45,6 +44,12 @@ jobs:
             echo "Postgres not ready yet..."
             sleep 2
           done
+
+      - name: Create test database
+        run: |
+          psql -h postgres -U postgres -c "CREATE DATABASE kasparro;"
+        env:
+          PGPASSWORD: postgres
 
       - name: Run Tests
         env:
