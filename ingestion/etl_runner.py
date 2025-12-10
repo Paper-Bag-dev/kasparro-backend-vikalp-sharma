@@ -10,10 +10,26 @@ from services.etl_state import update_last_run
 from core.db import Base, engine
 from core.models import ETLRun
 from observability.logger import log_json
+from sqlalchemy.exc import OperationalError
 import time
 import os
 
 CSV_PATH = os.getenv("CSV_PATH")
+
+def wait_for_db(engine, retries=10, delay=1):
+    for attempt in range(retries):
+        try:
+            with engine.connect() as conn:
+                return
+        except OperationalError as e:
+            log_json(
+                "db_wait_retry",
+                level="WARNING",
+                attempt=attempt + 1,
+                error=str(e)
+            )
+            time.sleep(delay)
+    raise Exception("Database not ready")
 
 
 def run_etl():
@@ -27,6 +43,7 @@ def run_etl():
         etl_last_run_duration_ms
     )
 
+    wait_for_db(engine)
     Base.metadata.create_all(bind=engine)
     db: Session = SessionLocal()
 
