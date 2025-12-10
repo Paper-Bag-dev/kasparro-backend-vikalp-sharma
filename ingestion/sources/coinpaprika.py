@@ -1,24 +1,22 @@
-import httpx
-from typing import List, Dict
 import os
+from typing import List, Dict
+from observability.http_client import request_with_retry
+from observability.rate_limiter import enforce_rate_limit
 
 def fetch_coinpaprika_items() -> List[Dict]:
+    enforce_rate_limit("coingecko")
     url = "https://api.coinpaprika.com/v1/tickers"
     api_key = os.getenv("COINPAPRIKA_API_KEY")
 
-    try:    
-        headers = {}
-        if api_key:
-            headers = {"Authorization": f"Bearer {api_key}"}
-        
-        with httpx.Client(timeout=10.0, headers=headers) as client:
-            response = client.get(url)
-            response.raise_for_status()
-            return response.json()
-    
-    except httpx.HTTPError as e:
-        print(f"[CoinPaprika] Encountered HTTP error: {e}")
-        return []
-    except Exception as e:
-        print(f"[CoinPaprika] Encountered HTTP error: {e}")
-        return []
+    headers = {}
+    if api_key:
+        headers = {"Authorization": f"Bearer {api_key}"}
+
+    response = request_with_retry(
+        "GET",
+        url,
+        headers=headers,
+        timeout=10.0,
+    )
+
+    return response.json()

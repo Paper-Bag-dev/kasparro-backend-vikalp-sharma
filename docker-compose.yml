@@ -28,6 +28,7 @@ services:
       DATABASE_URL: postgresql+psycopg2://postgres:postgres@postgres:5432/kasparro
       COINGECKO_API_KEY: ${COINGECKO_API_KEY}
       APP_ENV: production
+      CRON_SECRET: ${CRON_SECRET}
     ports:
       - "8000:8000"
     command: >

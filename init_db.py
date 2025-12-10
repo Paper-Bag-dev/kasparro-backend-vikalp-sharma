@@ -1,5 +1,4 @@
 from core.db import Base, engine
-import core.models
 
 def init():
     Base.metadata.create_all(bind=engine)

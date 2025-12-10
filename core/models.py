@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Float
+from sqlalchemy import Column, Integer, String, DateTime, Float, UniqueConstraint, Text
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.sql import func
 from .db import Base
@@ -26,7 +26,6 @@ class RawCoinGecko(Base):
     payload = Column(JSONB)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
-
 class NormalizedCoins(Base):
     __tablename__ = "normalized_coins"
     id = Column(Integer, primary_key=True)
@@ -40,3 +39,19 @@ class NormalizedCoins(Base):
     ts = Column(DateTime(timezone=True))
     extra = Column(JSONB)
     ingested_at = Column(DateTime(timezone=True), server_default=func.now())
+    __table_args__ = (
+        UniqueConstraint("source_record_id", "ts", name="uix_source_record_ts"),
+    )
+
+
+
+class ETLRun(Base):
+    __tablename__ = "etl_runs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    source = Column(String, nullable=False)
+    status = Column(String, nullable=False)
+    records_processed = Column(Integer, default=0)
+    error_message = Column(Text, nullable=True)
+    started_at = Column(DateTime(timezone=True), server_default=func.now())
+    finished_at = Column(DateTime(timezone=True), nullable=True)

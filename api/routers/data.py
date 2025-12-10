@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Request
 from sqlalchemy.orm import Session
+from sqlalchemy import desc
 from core.db import SessionLocal
 from core.models import NormalizedCoins
 
@@ -14,13 +15,18 @@ async def get_data(
     source: str | None = None
 ):
     db: Session = SessionLocal()
-
     query = db.query(NormalizedCoins)
 
     if symbol:
         query = query.filter(NormalizedCoins.symbol == symbol)
     if source:
         query = query.filter(NormalizedCoins.source_name == source)
+
+    query = query.order_by(
+        desc(NormalizedCoins.ingested_at),
+        desc(NormalizedCoins.source_name), 
+        desc(NormalizedCoins.id),
+    )
 
     items = query.offset((page - 1) * limit).limit(limit).all()
 
