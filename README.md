@@ -90,3 +90,5 @@ GET /metrics
 
 
 This project completes all core and some advanced requirements in P2, including observability, CI, Docker image publishing, and a clean deployment-ready architecture.
+
+Note: The ETL expects Postgres, so please run using the included Makefile or docker-compose instead of running the API image alone.
