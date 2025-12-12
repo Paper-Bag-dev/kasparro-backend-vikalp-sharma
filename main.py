@@ -19,6 +19,13 @@ ETL_FETCH_INTERVAL = os.getenv("ETL_FETCH_INTERVAL", 2)
 async def lifespan(app: FastAPI):
     global scheduler
     
+    try:
+        ETLService.run()
+        print("Initial ETL run completed.")
+    except Exception as e:
+        print(f"Initial ETL run failed: {e}")
+
+    
     if APP_ENV == "local":
         scheduler = BackgroundScheduler()
         scheduler.add_job(ETLService.run, "interval", minutes=ETL_FETCH_INTERVAL)
