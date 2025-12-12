@@ -52,6 +52,7 @@ Important variables:
 - `DATABASE_URL`
 - `COINGECKO_API_KEY`
 - `CRON_SECRET`
+- `ETL_FETCH_INTERVAL=2`
 - `CSV_PATH=./data/coins.csv`
 - `APP_ENV=local`
 
@@ -97,4 +98,12 @@ GET /metrics
 
 This project completes all core and some advanced requirements in P2, including observability, CI, Docker image publishing, and a clean deployment-ready architecture.
 
-Note: The ETL expects Postgres, so please run using the included Makefile or docker-compose instead of running the API image alone.
+# Fixed:
+1. CSV_PATH not included in docker-compose file causing csv missing error.
+2. APP_ENV: production hardcoded string removed. Now it's sourced properly from .env file.
+3. DATABASE_URL: harcoded string removed. Now it's also sourced properly from .env file.
+4. Minor oversights where I hardcoded database url for testing.
+
+# Added:
+1. .dockerignore file with .env included.
+2. ETL_FETCH_INTERVAL env variable to control interval of fetching the data via .env. Defauls to 2 minutes (to mainly prevent coingecko from throttling and blocking requests).
