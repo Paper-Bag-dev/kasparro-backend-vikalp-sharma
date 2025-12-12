@@ -20,7 +20,7 @@ async def lifespan(app: FastAPI):
     
     if APP_ENV == "local":
         scheduler = BackgroundScheduler()
-        scheduler.add_job(ETLService.run, "interval", minutes=2)
+        scheduler.add_job(ETLService.run, "interval", seconds=10)
         scheduler.start()
         print("Local scheduler started.")
     else:

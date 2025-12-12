@@ -25,10 +25,11 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql+psycopg2://postgres:postgres@postgres:5432/kasparro
+      DATABASE_URL: ${DATABASE_URL}
       COINGECKO_API_KEY: ${COINGECKO_API_KEY}
-      APP_ENV: production
+      APP_ENV: ${APP_ENV}
       CRON_SECRET: ${CRON_SECRET}
+      CSV_PATH: ${CSV_PATH}
     ports:
       - "8000:8000"
     command: >
