@@ -13,7 +13,7 @@ import os
 
 scheduler = None
 APP_ENV = os.getenv("APP_ENV", "local")
-ETL_FETCH_INTERVAL = os.getenv("ETL_FETCH_INTERVAL", 2)
+ETL_FETCH_INTERVAL = float(os.getenv("ETL_FETCH_INTERVAL", "2"))
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
